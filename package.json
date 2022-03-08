@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "nodemon./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dactrong/nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dactrong/nodejs/issues"
+  },
+  "homepage": "https://github.com/dactrong/nodejs#readme",
+  "description": ""
+}
