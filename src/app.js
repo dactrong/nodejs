@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import productRoute from '../routes/product';
 import morgan from 'morgan';
+import mongoose from 'mongoose'
 const app = express();
 
 app.use(cors())
@@ -12,6 +13,10 @@ app.use(morgan('tiny'))
 
 app.use("/api",productRoute)
 //connect
+
+mongoose.connect("mongodb://localhost:27017/we16310")
+.then(() => console.log("Kết nối thành công"))
+.catch(error => console.log(error))
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log("Chay server thanh cong", PORT);
