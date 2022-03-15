@@ -10,11 +10,12 @@ const app = express();
 app.use(cors())
 // midleware
 app.use(morgan('tiny'))
+app.use(express.json())
 
 app.use("/api",productRoute)
 //connect
 
-mongoose.connect("mongodb://localhost:27017/we16310")
+mongoose.connect("mongodb://localhost:27017/web16310")
 .then(() => console.log("Kết nối thành công"))
 .catch(error => console.log(error))
 const PORT = 3001;
