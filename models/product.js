@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-
+import mongoose, { Schema  } from "mongoose";
+const { ObjectId } = mongoose.Types;
 const productSchema = new Schema({
     name: {
         type: String,
@@ -10,7 +10,12 @@ const productSchema = new Schema({
     price: {
         type: Number,
         required: true
+    },
+    category:{
+        type: ObjectId,
+        required: true
     }
+
 }, { timestamps: true});
 
 export default mongoose.model('Product', productSchema);
