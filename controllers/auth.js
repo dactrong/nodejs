@@ -1,23 +1,25 @@
 import User from '../models/auth'
-
+import jwt from 'jsonwebtoken'
 export const register = async (req, res) => {
+    const { email, name, password } = req.body;
     try {
-        const { email, name, password } = req.body;
-        const register = await User.findOne({ email }).exec();
-        if (register) {
-            res.status(400).json({ message: "Tài khoản đã tồn tại" })
+        const existUser = await User.findOne({ email }).exec();
+        if (existUser) {
+            res.status(400).json({
+                message: "Tài khoản đã tồn tại"
+            })
         }
-        const user = await new User(req.body).save();
+        const user = await new User({ email, name, password }).save();
         res.json({
             user: {
                 _id: user._id,
-                name: user.name,
-                email: user.email
+                email: user.email,
+                name: user.name
             }
-        })
+        });
     } catch (error) {
         res.status(400).json({
-            error: "Đăng kí thất bại "
+            message: "Đăng ký thất bại"
         })
     }
 }
@@ -28,13 +30,15 @@ export const signin = async (req, res) => {
         const user = await User.findOne(email).exec();
         res.json(user);
         if (!user) {
-           res.status(404).json({ message:"Email không tồn tại"})
+            res.status(404).json({ message: "Email không tồn tại" })
         }
-        if(!user.authenticate(password)) {
-            res.status(404).json({ message:"Nhập sai password"})
+        if (!user.authenticate(password)) {
+            res.status(404).json({ message: "Nhập sai password" })
         }
+        const token = jwt.sign({ _id: user._id }, "123456", { expiresIn: '1h' })
         res.json({
-            user:{
+            token,
+            user: {
                 _id: user._id,
                 username: user.username,
                 password: user.password
