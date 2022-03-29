@@ -5,7 +5,7 @@ import { checkAuth, isAdmin, isAuth, requireSignin } from '../middlewares/checkA
 
 const router = Router();
 
-router.get('/products', checkAuth, list);
+router.get('/products',  list);
 router.post('/products/:userId', requireSignin, isAuth, isAdmin,create);
 router.get('/product/:id', checkAuth, get);
 router.delete('/product/:id', checkAuth, remove);

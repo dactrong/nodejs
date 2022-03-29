@@ -141,6 +141,8 @@
     "strip-ansi": "^6.0.1",
     "strip-json-comments": "^2.0.1",
     "supports-color": "^5.5.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
     "to-readable-stream": "^1.0.0",
     "to-regex-range": "^5.0.1",
     "toidentifier": "^1.0.1",
@@ -162,7 +164,9 @@
     "wrappy": "^1.0.2",
     "write-file-atomic": "^3.0.3",
     "xdg-basedir": "^4.0.0",
-    "yallist": "^4.0.0"
+    "yallist": "^4.0.0",
+    "yaml": "^1.10.2",
+    "yamljs": "^0.3.0"
   },
   "scripts": {
     "start": "nodemon ./src/app.js --exec babel-node -e js",
