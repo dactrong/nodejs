@@ -1,5 +1,4 @@
-// const http = require('http');
-// const express = require("express");
+
 import express from 'express';
 import cors from 'cors';
 import productRoute from '../routes/product';

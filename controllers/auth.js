@@ -1,4 +1,4 @@
-import User from '../models/auth'
+import User from '../models/user'
 import jwt from 'jsonwebtoken'
 export const register = async (req, res) => {
     const { email, name, password } = req.body;
@@ -45,7 +45,8 @@ export const signin = async (req, res) => {
             user: {
                 _id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                role: user.role
             }
         })
     } catch (error) {
