@@ -25,7 +25,59 @@ export const register = async (req, res) => {
         })
     }
 }
+export const userUpdate = async (req, res) => {
+    const condition = { _id: req.params.id }
+    const { email, name, password, phone, address } = req.body;
+    try {
+        const existUser = await User.findOne({ email }).exec();
+        if (existUser) {
+            res.status(400).json({
+                message: "Tài khoản đã tồn tại"
+            })
+        }
+        const user = await  User.findOneAndUpdate(condition,{ email, name, password, phone, address }).exec();
+        res.json({
+            user: {
+                _id: user._id,
+                email: user.email,
+                name: user.name,
+                phone: user.phone,
+                address: user.address
+            }
+        });
+    } catch (error) {
+        res.status(400).json({
+            message: "Đăng ký thất bại"
+        })
+    }
+}
 
+
+export const readUser = async (req, res) => {
+    const condition = { _id: req.params.id };
+    try {
+        const user = await User.findOne(condition).exec();
+
+        res.json({
+            user
+        });
+    } catch (error) {
+        res.status(404).json({
+            error: 'Lỗi'
+        })
+    }
+}
+
+export const listUser = async (req, res) => {
+    try {
+        const user = await User.find({}).exec();
+        res.json(user);
+    } catch (error) {
+        res.status(400).json({
+            error: "Không có sản phẩm"
+        })
+    }
+}
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;
@@ -48,7 +100,7 @@ export const signin = async (req, res) => {
                 _id: user._id,
                 email: user.email,
                 name: user.name,
-                phone:user.phone,
+                phone: user.phone,
                 address: user.address,
                 role: user.role
             }
@@ -56,6 +108,18 @@ export const signin = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             message: "Đăng nhập thất bại"
+        })
+    }
+}
+
+
+export const remove = async (req, res) => {
+    try {
+        const user = await User.findOneAndDelete({ _id: req.params.id }).exec();
+        res.json(user);
+    } catch (error) {
+        res.status(400).json({
+            error: "Xóa tài khoản không thành công"
         })
     }
 }
