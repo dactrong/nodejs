@@ -1,9 +1,4 @@
-// const data = [
-//     {id: 1, name: "Product A"}, 
-//     {id: 2, name: "Product B"}
-// ];
-// import mongoose from "mongoose";
-// const Product = mongoose.model("Product", { name: String });
+
 import Product from '../models/product'
 
 export const create = async (req, res) => {
@@ -30,7 +25,7 @@ export const list = async (req, res) => {
 export const get = async (req, res) => {
     console.log(req.params.id)
     try {
-        const product = await Product.findOne({_id: req.params.id}).exec();
+        const product = await Product.findOne({ _id: req.params.id }).exec();
         res.json(product);
     } catch (error) {
         res.status(400).json({
@@ -41,7 +36,7 @@ export const get = async (req, res) => {
 
 export const remove = async (req, res) => {
     try {
-        const product = await Product.findOneAndDelete({_id: req.params.id}).exec();
+        const product = await Product.findOneAndDelete({ _id: req.params.id }).exec();
         res.json(product);
     } catch (error) {
         res.status(400).json({
@@ -58,6 +53,17 @@ export const update = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             error: "Xóa sản phẩm không thành công"
+        })
+    }
+}
+
+export const search = async (req, res) => {
+    try {
+        const productSearch = await Product.find({ name: {$regex: `.*${req.body.search}*.`, $options: 'i' } }).exec();
+        res.json(productSearch);
+    } catch (error) {
+        res.status(400).json({
+            error: "Lỗi không tìm thấy "
         })
     }
 }

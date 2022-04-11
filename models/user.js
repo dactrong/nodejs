@@ -14,6 +14,13 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phone: {
+        type: Number
+    },
+    address: {
+        type: String,
+        required: true
+    },
     salt: {
         type: String
     },

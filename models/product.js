@@ -15,14 +15,19 @@ const productSchema = new Schema({
         type:Number,
         required: true
     },
-    image:{
+    images:{
         type: String,
         required: true
     },
     category:{
         type: ObjectId,
         required: true
-    }
+    },
+    desc:{
+        type: String,
+        required: true
+    },
+    
 
 }, { timestamps: true});
 

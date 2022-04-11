@@ -1,7 +1,7 @@
 import User from '../models/user'
 import jwt from 'jsonwebtoken'
 export const register = async (req, res) => {
-    const { email, name, password } = req.body;
+    const { email, name, password, phone, address } = req.body;
     try {
         const existUser = await User.findOne({ email }).exec();
         if (existUser) {
@@ -9,12 +9,14 @@ export const register = async (req, res) => {
                 message: "Tài khoản đã tồn tại"
             })
         }
-        const user = await new User({ email, name, password }).save();
+        const user = await new User({ email, name, password, phone, address }).save();
         res.json({
             user: {
                 _id: user._id,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                phone: user.phone,
+                address: user.address
             }
         });
     } catch (error) {
@@ -26,26 +28,28 @@ export const register = async (req, res) => {
 
 
 export const signin = async (req, res) => {
-    const { email, password} = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await User.findOne({email}).exec();
-        if(!user){
+        const user = await User.findOne({ email }).exec();
+        if (!user) {
             res.status(400).json({
                 message: "Email không tồn tại"
             })
         }
-        if(!user.authenticate(password)){
+        if (!user.authenticate(password)) {
             res.status(400).json({
                 message: "Mật khẩu không đúng"
             })
         }
-        const token = jwt.sign({_id: user._id}, "123456", { expiresIn: '1h'})
+        const token = jwt.sign({ _id: user._id }, "123456", { expiresIn: '1h' })
         res.json({
             token,
             user: {
                 _id: user._id,
                 email: user.email,
                 name: user.name,
+                phone:user.phone,
+                address: user.address,
                 role: user.role
             }
         })

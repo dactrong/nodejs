@@ -5,7 +5,7 @@ export const checkAuth = (req, res, next) => {
     if(status){
         next();
     } else {
-        console.log("Anh không có quyền truy cập");
+        console.log("Bạn không có quyền truy cập");
     }
 }
 
